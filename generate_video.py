@@ -208,11 +208,15 @@ def save_video_from_audio_video(audio_input_path, input_video_path, output_video
 
 
 
-MODEL_PATH_G = './save/gen_almaram_norm_batch32'
+SPEAKER = 'almaram'
+PATS_PATH = '../pats/data'
+
+ROOT_PATH = './save/'+ SPEAKER + '/'
+MODEL_PATH_G = ROOT_PATH + 'genepoch5'
 
 
-common_kwargs = dict(path2data = '../pats/data',
-                     speaker = ['almaram'],
+common_kwargs = dict(path2data = PATS_PATH,
+                     speaker = [SPEAKER],
                      modalities = ['pose/data', 'audio/log_mel_512'],
                      fs_new = [15, 15],
                      batch_size = 4,
@@ -252,14 +256,14 @@ with torch.no_grad():
     # gp_torch = torch.flatten(gp_torch, start_dim=0, end_dim=1)
     gp = gp_torch.numpy()
 
-    op = ori_pose[0].numpy()
+    # op = ori_pose[0].numpy()
 
-print('rp shape: ', rp.shape)
-print('rp[31]: ', rp[31])
-print('op shape: ', op.shape)
-print('op[31]: ', op[31])
-print('gp[31]: ', gp[31])
-print('rp[31] - gp[31]', rp[31] - gp[31])
+# print('rp shape: ', rp.shape)
+# print('rp[31]: ', rp[31])
+# print('op shape: ', op.shape)
+# print('op[31]: ', op[31])
+# print('gp[31]: ', gp[31])
+# print('rp[31] - gp[31]', rp[31] - gp[31])
 
 # centre1 = np.array([[700], [360]])
 # centre2 = np.array([[2100], [360]])
@@ -269,8 +273,8 @@ size = np.array([[3, 0], [0, -3]])
 rp = np.matmul(size, rp) - np.array([[1500], [0]])
 gp = np.matmul(size, gp)
 
-plot_all_keypoints(img=None, keypoints=-rp[31], img_width=1280, img_height=720, output='./save/drawall_rp.jpg', title='real pose', title_x=1, cm=cm.rainbow, alpha_img=0.5)
-plot_all_keypoints(img=None, keypoints=-gp[31], img_width=1280, img_height=720, output='./save/drawall_gp.jpg', title='generated pose', title_x=1, cm=cm.rainbow, alpha_img=0.5)
-draw_pose(img=None, keypoints=-rp[31], img_width=1280, img_height=720, output='./save/output.jpg', title='real pose', title_x=1, cm=cm.rainbow, alpha_img=0.5, alpha_keypoints=None, fig=None, line_width=LINE_WIDTH_CONST)
+# plot_all_keypoints(img=None, keypoints=-rp[31], img_width=1280, img_height=720, output='./save/drawall_rp.jpg', title='real pose', title_x=1, cm=cm.rainbow, alpha_img=0.5)
+# plot_all_keypoints(img=None, keypoints=-gp[31], img_width=1280, img_height=720, output='./save/drawall_gp.jpg', title='generated pose', title_x=1, cm=cm.rainbow, alpha_img=0.5)
+# draw_pose(img=None, keypoints=-rp[31], img_width=1280, img_height=720, output='./save/output.jpg', title='real pose', title_x=1, cm=cm.rainbow, alpha_img=0.5, alpha_keypoints=None, fig=None, line_width=LINE_WIDTH_CONST)
 
 save_side_by_side_video('./save/temp', -rp, -gp, './videos', delete_tmp=False)

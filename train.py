@@ -11,19 +11,20 @@ from pats_master.data import Data
 from standardizational_index import get_mean_std, get_mean_std_necksub
 from funcs import pos_to_motion
 
-SPEAKER = 'conan'
+SPEAKER = 'almaram'
+PATS_PATH = '../pats/data'
 
 ROOT_PATH = './save/'+ SPEAKER + '/'
 MODEL_PATH_G = ROOT_PATH + 'gen'
 MODEL_PATH_D = ROOT_PATH + 'dis'
 LOSS_PATH = ROOT_PATH + 'loss.npy'
 lr = 10e-4
-n_epochs = 3
+n_epochs = 6
 lambda_d = 1.
 lambda_gan = 1.
 
 
-common_kwargs = dict(path2data = '../pats/data',
+common_kwargs = dict(path2data = PATS_PATH,
                      speaker = [SPEAKER],
                      modalities = ['pose/data', 'audio/log_mel_512'],
                      fs_new = [15, 15],

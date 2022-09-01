@@ -12,11 +12,14 @@ from standardizational_index import get_mean_std, get_mean_std_necksub
 from funcs import pos_to_motion
 from evaluation import compute_pck, compute_pck_radius
 
+SPEAKER = 'almaram'
+PATS_PATH = '../pats/data'
+
 MODEL_PATH_G = './save/ellen/genepoch3'
 
 
-common_kwargs = dict(path2data = '../pats/data',
-                     speaker = ['ellen'],
+common_kwargs = dict(path2data = PATS_PATH,
+                     speaker = [SPEAKER],
                      modalities = ['pose/data', 'audio/log_mel_512'],
                      fs_new = [15, 15],
                      batch_size = 4,
